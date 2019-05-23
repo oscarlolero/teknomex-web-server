@@ -1,10 +1,30 @@
 const axios = require('axios');
 // const jwt = require('jsonwebtoken');
 
-module.exports = (app) => {
+module.exports = (app, passport) => {
 
     app.get('/admin', async (req, res) => {
         res.render('admin');
+    });
+
+    app.get('/account', async (req, res) => {
+        res.render('account');
+    });
+
+    app.post('/login', passport.authenticate('local-login', {
+        successRedirect: '/cart',
+        failureRedirect: '/login',
+        failureFlash: true //que se muestren los mensajes
+    }));
+
+    app.get('/login', async (req, res) => {
+        if(req.isAuthenticated()) { //mehtodo de passport
+            res.redirect('/account');
+        } else {
+            res.render('login', {
+                message: req.flash('loginMessage')
+            });
+        }
     });
 
     app.get('/cart', async (req, res) => {
