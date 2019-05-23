@@ -1,0 +1,509 @@
+/*//////////////////////////////////////////////////////////////////
+[ RESTYLE TAG ]*/
+* {
+	margin: 0px; 
+	padding: 0px; 
+	box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  font-family: 'Lato', 'Arial', sans-serif;
+  font-weight: 300;
+  text-rendering: optimizeLegibility;
+  font-size: 18px;
+}
+
+/* ------------------------------------ */
+h1,h2,h3,h4,h5,h6 {margin: 0px;}
+
+a:visited, a:link, a:active
+{
+    text-decoration: none;
+    color: #808080;
+}
+p {margin: 0px;}
+
+ul, li {
+	margin: 0px;
+	list-style-type: none;
+}
+
+
+/* ------------------------------------ */
+input {
+  display: block;
+	outline: none;
+	border: none !important;
+}
+
+textarea {
+  display: block;
+  outline: none;
+}
+
+textarea:focus, input:focus {
+  border-color: transparent !important;
+}
+
+/* ------------------------------------ */
+button {
+	outline: none !important;
+	border: none;
+	background: transparent;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+iframe {
+	border: none !important;
+}
+
+/* NAV BAR */
+nav {
+    display: flex;
+    flex-direction: row;
+    background-color: #fff;
+    box-shadow: 0 3px 10px #e5e5e5;
+    text-transform: uppercase;
+    color: #808080;
+}
+nav ul {
+    display: flex;
+    list-style: none;
+}
+.admin-nav {
+    flex-grow: 1;
+}
+.main-nav {
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+
+nav li {
+  padding: 15px 25px;
+  letter-spacing: 1px;
+}
+
+nav li:hover {
+  box-shadow: inset 0 -3px 0 #6a73b4;
+  transition: box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+nav li:hover .submenu > li {
+  display: block;
+  width: 216px;
+}
+
+.submenu > li:hover {
+  box-shadow: 0 3px 10px #e5e5e5;
+  transition: box-shadow 0.2s ease-in;
+  color: #6a73b4;
+}
+.submenu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0 3px 10px #e5e5e5;
+  top:57px;
+  left: 0;
+}
+
+.submenu li {
+  display: none;
+}
+/*//////////////////////////////////////////////////////////////////
+[ Table ]*/
+
+.limiter {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.container-table100 {
+  width: 100%;
+  min-height: 100vh;
+  background: #d1d1d1;
+
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 33px 30px;
+}
+
+/* .wrap-table100 {
+  width: 1300px;
+} */
+
+/*//////////////////////////////////////////////////////////////////
+[ Table ]*/
+.table100 table {
+  width: 100%;
+  background-color: #fff;
+}
+
+.table100 th, .table100 td {
+  font-weight: unset;
+  padding-right: 25px;
+}
+
+.row100.head th {
+  padding-top: 24px;
+  padding-bottom: 20px;
+}
+
+.row100 td {
+  padding-top: 18px;
+  padding-bottom: 14px;
+}
+
+.row100 span {
+  font-size: 18px;
+  color: rgba(78, 143, 160, 0.7);
+  cursor: pointer;
+}
+
+.row100 span:last-child {
+  margin-left: 5px;
+  color: rgba(150, 56, 56, 0.7);
+}
+
+thead i {
+  color: #fff;
+  margin-left: 5px;
+  transition: all 0.5s ease;
+}
+thead i:hover {
+  color: rgba(10, 201, 121, 0.562);
+  transition: all 0.5s ease;
+}
+
+.column100 {
+  width: 150px;
+  padding-left: 25px;
+}
+
+.principal .column1,
+.principal .column3,
+.principal .column4,
+.principal .column5 {
+  width: 240px;
+}
+.columnAction {
+  text-align: center;
+  width: 50px;
+}
+
+
+.departments {
+  display: flex;
+  justify-content: center;
+}
+
+.departments .column1 {
+  width: 240px;
+}
+
+.courses table {
+  width: auto;
+}
+
+.courses {
+  display: flex;
+  justify-content: center;
+}
+
+.courses .column2 {
+  width: 350px;
+}
+.courses .column1 {
+  width: 150px;
+}
+
+.professors {
+  display: flex;
+  justify-content: center;
+}
+.professors .column1,
+.professors .column2 {
+  width: 350px;
+}
+
+.professors .column3,
+.professors .column4 {
+  width: 200px;
+}
+
+.periods .column1,
+.periods .column2,
+.periods .column3 {
+  width: 280px;
+}
+
+.periods {
+  display: flex;
+  justify-content: center;
+}
+
+.timeblocks {
+  display: flex;
+  justify-content: center;
+}
+.timeblocks .column1 {
+  width: 200px;
+}
+.timeblocks .column2 {
+  width: 280px;
+}
+
+.classrooms .column1,
+.classrooms .column2,
+.classrooms .column3 {
+  width: 230px;
+}
+
+.classrooms {
+  display: flex;
+  justify-content: center;
+}
+
+.schedules .column1,
+.schedules .column3,
+.schedules .column4,
+.schedules .column5 {
+  width: 270px;
+}
+
+.schedules {
+  width: 100%;
+  justify-content: center;
+}
+/*==================================================================
+[ TABLE Ver3 ]*/
+.table100.ver3 th:first-child {
+    border-top-left-radius: 10px;
+}
+.table100.ver3 th:last-child {
+    border-top-right-radius: 10px;
+}
+.table100.ver3 tbody tr {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.table100.ver3 td {
+  font-size: 19px;
+  color: #808080;
+  line-height: 1.4;
+}
+
+.table100.ver3 th {
+  font-size: 19px;
+  color: #fff;
+  line-height: 1.4;
+  text-transform: uppercase;
+  background-color: #6a73b4;
+  font-weight: 400;
+}
+
+.table100.ver3 .row100:hover td {
+  background-color: rgba(214, 214, 214, 0.2);
+}
+
+.table100.ver3 .hov-column-ver3 {
+  background-color: rgba(214, 214, 214, 0.2);
+}
+
+.table100.ver3 .hov-column-head-ver3 {
+  background-color: rgba(106, 115, 180, 0.84) !important;
+}
+
+/*------------------------------------------------------------------
+
+//MODAL*/
+.modal * {
+  font-family: 'Lato', 'Arial', sans-serif;
+  font-weight: 300;
+  text-rendering: optimizeLegibility;
+}
+/*[ Modal Input ]*/
+.btn-add,
+.btn-edit {
+  background-color: #6a73b4;
+  color: white;
+}
+
+.btn-add:hover,
+.btn-edit:hover {
+  background-color: #535a8d;
+  transition: all 0.5s ease;
+}
+
+.wrap-input100:not(.select-wrap) {
+  width: 100%;
+  position: relative;
+  border-bottom: 2px solid #d9d9d9;
+}
+
+.input100 {
+  font-size: 18px;
+  color: #555555;
+  line-height: 1.2;
+
+  display: block;
+  width: 100%;
+  height: 52px;
+  background: transparent;
+  padding: 0 5px;
+}
+
+.input100-select,
+.input100-select-edit {
+
+  width: 100%;
+  position: relative;
+  padding: 7px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+
+.input100-select:focus,
+.input100-select-edit:focus {
+  outline: none;
+}
+/*---------------------------------------------*/ 
+.focus-input100 {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.focus-input100::before {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+
+}
+
+:not(.custom).focus-input100::before {
+  background: #6a73b4;
+}
+
+.focus-select {
+  font-size: 15px;
+  color: #999999;
+  line-height: 1.2;
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.focus-input100::after {
+  font-size: 18px;
+  color: #999999;
+  line-height: 1.2;
+
+  content: attr(data-placeholder);
+  display: block;
+  width: 100%;
+  position: absolute;
+  top: 15px;
+  left: 0px;
+  padding-left: 5px;
+
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.input100:focus + .focus-input100::after,
+.custom-input:focus + .focus-input100::after {
+  top: -20px;
+  font-size: 15px;
+}
+
+.input100:focus + .focus-input100::before,
+.custom-input:focus + .focus-input100::before {
+  width: 100%;
+}
+
+.has-val.input100 + .focus-input100::after,
+.has-val.custom-input + .focus-input100::after {
+  top: -20px;
+  font-size: 15px;
+}
+
+.has-val.input100 + .focus-input100::before,
+.has-val.custom-input + .focus-input100::before {
+  width: 100%;
+}
+
+.custom {
+  top: -10px;
+}
+.exports-container {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 30px;
+}
+
+.exports-container span {
+  margin-right: 10px;
+}
+
+.export-excel i {
+  
+  color: rgb(83, 122, 85);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out
+}
+
+.export-excel i:hover {
+  color: rgb(76, 167, 81);
+  transition: all 0.3s ease-in-out;
+}
+
+.copy-clipboard i {
+  
+  color: rgb(141, 141, 141);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out
+}
+
+.copy-clipboard i:hover {
+  color: rgb(58, 58, 58);
+  transition: all 0.3s ease-in-out;
+}
+
+.print i {
+  
+  color: rgb(93, 122, 155);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out
+}
+
+.print i:hover {
+  color: rgb(131, 160, 194);
+  transition: all 0.3s ease-in-out;
+}

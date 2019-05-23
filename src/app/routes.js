@@ -2,6 +2,11 @@ const axios = require('axios');
 // const jwt = require('jsonwebtoken');
 
 module.exports = (app) => {
+
+    app.get('/admin', async (req, res) => {
+        res.render('admin');
+    });
+
     app.get('/cart', async (req, res) => {
         res.render('cart');
     });
