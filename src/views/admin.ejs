@@ -18,62 +18,66 @@
 
 <body>
 <% include partials/nav %>
-<div class="courses js_global_container" data-type="courses">
+<div class="courses">
     <div class="table100 ver3 m-t-10">
         <table data-vertable="ver3">
             <thead>
             <tr class="row100 head">
-                <th class="column100 column1">Code <span title="Add course" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus-circle"></i></span></th>
-                <th class="column100 column2">Course</th>
-                <th class="column100 columnAction">Action</th>
+                <th class="column100 column2">Producto <span title="Add course" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus-circle"></i></span></th>
+                <th class="column100 column2">Título</th>
+                <th class="column100 column2">Descripción</th>
+                <th class="column100 column2">Precio</th>
+                <th class="column100 column2">Stock</th>
+                <th class="column100 columnAction">Acciones</th>
             </tr>
             </thead>
             <tbody>
-            <tr class="row100">
-                <td class="column100 column1">
-
-                </td>
-                <td class="column100 column2">
-
-                </td>
+            <% products.forEach(function(product) { %>
+                <tr class="row100">
+                <td class="column100 column1"><img src="<%= product.productData.image %>" class="little-image"></td>
+                <td class="column100 column2"><%= product.productData.title %></td>
+                <td class="column100 column2"><%= product.productData.description %></td>
+                <td class="column100 column2"><%= product.productData.price %></td>
+                <td class="column100 column2">2</td>
                 <td class="column100 columnAction">
-                    <!--                        <span data-process="edit-" title="Edit course" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></span>-->
-                    <!--                        <span data-process="delete-" title="Delete course"><i class="fas fa-minus-circle"></i></span>-->
+                   <span data-process="edt<%= product.productId %>" title="Editar producto" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></span>
+                   <span data-process="del<%= product.productId %>" title="Eliminar producto"><i class="fas fa-minus-circle"></i></span>
                 </td>
             </tr>
+            <% }) %>
             </tbody>
         </table>
     </div>
 </div>
 <!-- Insert modal -->
-<div class="insert-modal" data-js_edit_id="-1">
-    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Add course</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body m-t-20">
-                    <div class="wrap-input100 validate-input m-b-35" data-validate="Password missing">
-                        <input class="input100" id="field1" type="text" maxlength="5">
-                        <span class="focus-input100" data-placeholder="Code of course"></span>
-                    </div>
-                    <div class="wrap-input100 validate-input" data-validate="Password missing">
-                        <input class="input100" id="field2" type="text">
-                        <span class="focus-input100" data-placeholder="Name of course"></span>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-add btn-validate">Add</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<!--<div class="insert-modal" data-js_edit_id="-1">-->
+<!--    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"-->
+<!--         aria-hidden="true">-->
+<!--        <div class="modal-dialog modal-dialog-centered" role="document">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-header">-->
+<!--                    <h5 class="modal-title" id="exampleModalLongTitle">Add course</h5>-->
+<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                        <span aria-hidden="true">&times;</span>-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--                <div class="modal-body m-t-20">-->
+<!--                    <div class="wrap-input100 validate-input m-b-35" data-validate="Password missing">-->
+<!--                        <input class="input100" id="field1" type="text" maxlength="5">-->
+<!--                        <span class="focus-input100" data-placeholder="Code of course"></span>-->
+<!--                    </div>-->
+<!--                    <div class="wrap-input100 validate-input" data-validate="Password missing">-->
+<!--                        <input class="input100" id="field2" type="text">-->
+<!--                        <span class="focus-input100" data-placeholder="Name of course"></span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="modal-footer">-->
+<!--                    <button type="button" class="btn btn-add btn-validate">Add</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 <!-- Edit modal -->
 <div class="edit-modal">
     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -81,21 +85,33 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Edit course</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Editar producto</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body m-t-20">
-                    <div class="wrap-input100 validate-input" data-validate="Password missing">
-                        <input class="input100" id="efield1" type="text" maxlength="5">
-                        <span class="focus-input100" data-placeholder="Code of course"></span>
+                    <div class="wrap-input100 validate-input" data-validate="Escribe el título">
+                        <input class="input100" type="text">
+                        <span class="focus-input100" data-placeholder="Título"></span>
                     </div>
                 </div>
                 <div class="modal-body m-t-20">
-                    <div class="wrap-input100 validate-input" data-validate="Password missing">
-                        <input class="input100" id="efield2" type="text">
-                        <span class="focus-input100" data-placeholder="Name of course"></span>
+                    <div class="wrap-input100 validate-input" data-validate="Escribe la descripción">
+                        <textarea cols="10" rows="10" class="input100" type="text"> </textarea>
+                        <span class="focus-input100" data-placeholder="Descripción"></span>
+                    </div>
+                </div>
+                <div class="modal-body m-t-20">
+                    <div class="wrap-input100 validate-input" data-validate="Escribe el precio">
+                        <input class="input100" type="number">
+                        <span class="focus-input100" data-placeholder="Precio"></span>
+                    </div>
+                </div>
+                <div class="modal-body m-t-20">
+                    <div class="wrap-input100 validate-input" data-validate="Escribe el stock">
+                        <input class="input100" type="number">
+                        <span class="focus-input100" data-placeholder="Stock"></span>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -106,15 +122,25 @@
     </div>
 </div>
 
-<script src="/socket.io/socket.io.js"></script>
 <script src="js/admin/jquery/jquery-3.2.1.min.js"></script>
 <script src="js/admin/bootstrap/js/popper.js"></script>
 <script src="js/admin/bootstrap/js/bootstrap.min.js"></script>
 <script src="js/admin/select2/select2.min.js"></script>
 <script src="js/admin/xlsx/xlsx.full.min.js"></script>
 <script src="js/admin/filesaver/FileSaver.min.js"></script>
-<script src="js/edit.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="js/admin/admin.js"></script>
 
+<style>
+    .little-image {
+        vertical-align: middle;
+        width: 100px;
+        height: 100px;
+        border-radius: 20%;
+    }
+
+    textarea { border: none; }
+</style>
 </body>
 
 </html>

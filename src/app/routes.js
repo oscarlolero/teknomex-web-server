@@ -4,7 +4,16 @@ const axios = require('axios');
 module.exports = (app, passport) => {
 
     app.get('/admin', async (req, res) => {
-        res.render('admin');
+        const DBRes = await axios.get(`https://flutter-products-3e91e.firebaseio.com/products.json`);
+        const products = Object.entries(DBRes.data).map((element) => {
+            return {
+                productId: element[0],
+                productData: element[1]
+            }
+        });
+        res.render('admin', {
+            products
+        });
     });
 
     app.get('/account', async (req, res) => {
