@@ -1,11 +1,11 @@
 .single-products-catagory {
-    width: 320px;
+    width: 450px;
     margin-bottom: 20px;
 }
 
-.single-products-catagory img {
-    width: fit-content;
-}
+/*.single-products-catagory img {*/
+/*    width: fit-content;*/
+/*}*/
 
 .cart-fav-search {
     margin-top: 120px;

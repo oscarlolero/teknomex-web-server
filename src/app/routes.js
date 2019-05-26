@@ -3,7 +3,39 @@ const axios = require('axios');
 
 module.exports = (app, passport) => {
 
-    app.get('/admin', async (req, res) => {
+    app.post('/bill', async (req, res) => {
+        const userData = await axios.get(`https://flutter-products-3e91e.firebaseio.com/users/${req.session.passport.user.username}/bill.json`);
+        const products = JSON.parse(req.body.products).map(e => {
+            return {
+                product: {
+                    description: e.title,
+                    product_key: '60131324',
+                    price: parseInt(e.price.slice(1))*parseInt(e.qty),
+                }
+            }
+        });
+        try {
+            // Importa el constructor del cliente
+            const Facturapi = require('facturapi');
+            // Crea una instancia del cliente usando tu llave secreta
+            const facturapi = new Facturapi('sk_test_K8n29vZ0YlpA45YmDjxdqgjzR7QDGXNx');
+            const invoice = await facturapi.invoices.create({
+                customer: {
+                    legal_name: userData.data.first_name.concat(userData.data.last_name),
+                    email: userData.data.email,
+                    tax_id: userData.data.rfc
+                },
+                items: products,
+                payment_form: Facturapi.PaymentForm.DINERO_ELECTRONICO
+            });
+            await facturapi.invoices.sendByEmail(invoice.id);
+            return res.status(200).send();
+        } catch (e) {
+            return res.status(502).send(e);
+        }
+    });
+
+    app.get('/admin', isLoggedIn, async (req, res) => {
         const DBRes = await axios.get(`https://flutter-products-3e91e.firebaseio.com/products.json`);
         const products = Object.entries(DBRes.data).map((element) => {
             return {
@@ -16,8 +48,9 @@ module.exports = (app, passport) => {
         });
     });
 
-    app.get('/account', async (req, res) => {
+    app.get('/account', isLoggedIn, async (req, res) => {
         res.render('account', {
+            username: req.session.passport.user.username,
             isLogged: req.isAuthenticated(),
             isAdmin: req.isAuthenticated() ? req.session.passport.user.isAdmin : false
         });
@@ -30,7 +63,7 @@ module.exports = (app, passport) => {
     }));
 
     app.get('/login', async (req, res) => {
-        if(req.isAuthenticated()) { //mehtodo de passport
+        if (req.isAuthenticated()) { //mehtodo de passport
             res.redirect('/account');
         } else {
             res.render('login', {
@@ -39,7 +72,7 @@ module.exports = (app, passport) => {
         }
     });
 
-    app.get('/cart', async (req, res) => {
+    app.get('/cart', isLoggedIn, async (req, res) => {
         res.render('cart', {
             isLogged: req.isAuthenticated(),
             isAdmin: req.isAuthenticated() ? req.session.passport.user.isAdmin : false
@@ -116,6 +149,7 @@ module.exports = (app, passport) => {
             }));
         }
     });
+
     app.post('/product', async (req, res) => {
         const DBRes = await axios.post(`https://flutter-products-3e91e.firebaseio.com/products.json`, req.body);
         console.log();
@@ -128,21 +162,12 @@ module.exports = (app, passport) => {
         const DBRes = await axios.get(`https://flutter-products-3e91e.firebaseio.com/products.json`);
         res.status(200).send(DBRes.data);
     });
+};
 
-    // app.get('/cart', async (req, res) => {
-    //     const DBRes = await axios.get(`https://flutter-products-3e91e.firebaseio.com/users/${req.query.username}.json`);
-    //     const productsList = Object.values(DBRes.data)[0].cart;
-    //
-    //
-    //     res.status(200).send();
-    // });
-
-    // app.post('/cart', async (req, res) => {
-    //     let DBRes = await axios.get(`https://flutter-products-3e91e.firebaseio.com/users/${req.query.username}/cart.json`);
-    //     const newProductList = DBRes.data;
-    //     newProductList.push(req.body.newProduct[0]);
-    //     DBRes = await axios.patch(`https://flutter-products-3e91e.firebaseio.com/users/${req.query.username}.json`, {"cart": newProductList});
-    //     res.status(200).send(DBRes.data);
-    // });
-
+const isLoggedIn = (req, res, next) => {
+    if(req.isAuthenticated()) { //metodo de passport
+        return next();
+    } else {
+        res.redirect('/login');
+    }
 };

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Factura</title>
+</head>
+<body>
+    <div class="container">
+        <div class="options">
+            <div>Ajustes de cuenta</div>
+            <a href="#" class="active">Opcion 1</a>
+            <a href="#">Opcion 2</a>
+        </div>
+        <div class="separator"></div>
+        <div class="option-selected"></div>
+    </div>
+</body>
+<style>
+    .container {
+        display: flex;
+        flex-direction: row;
+        width: 600px;
+        height: 500px;
+        margin:auto;
+    }
+    .options {
+        flex-grow: 1;
+        background-color: white;
+        border-radius: 3px;
+        border: solid 1px #d1cece;
+        color: blue;
+        font-family: Segoe UI;
+        font-size: 14px;
+    }
+    .options .active {
+        color: black;
+    }
+    .options a {
+        display: block;
+        text-decoration: none;
+        padding: 10px 0 10px 10px;
+        border-bottom: solid 1px #d1cece;
+    }
+    .options a:hover {
+        background-color: #f3f5f8;
+    }
+    .options div:first-child{
+        padding: 10px 0 10px 10px;
+        color: #5b5b5b;
+        border-bottom: solid 1px #d1cece;
+        background-color: #f3f5f8;
+    }
+    .separator {
+        margin-left: 25px;
+    }
+    .option-selected {
+        flex-grow: 4;
+        background-color: white;
+        border: solid 1px grey;
+        border-bottom-right-radius: 12px;
+        border-top-right-radius: 12px;
+    }
+</style>
+</html>
