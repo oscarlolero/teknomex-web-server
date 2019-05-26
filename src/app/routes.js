@@ -17,11 +17,14 @@ module.exports = (app, passport) => {
     });
 
     app.get('/account', async (req, res) => {
-        res.render('account');
+        res.render('account', {
+            isLogged: req.isAuthenticated(),
+            isAdmin: req.isAuthenticated() ? req.session.passport.user.isAdmin : false
+        });
     });
 
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect: '/cart',
+        successRedirect: '/index',
         failureRedirect: '/login',
         failureFlash: true //que se muestren los mensajes
     }));
@@ -37,7 +40,10 @@ module.exports = (app, passport) => {
     });
 
     app.get('/cart', async (req, res) => {
-        res.render('cart');
+        res.render('cart', {
+            isLogged: req.isAuthenticated(),
+            isAdmin: req.isAuthenticated() ? req.session.passport.user.isAdmin : false
+        });
     });
 
     app.get('/product-details', async (req, res) => {
@@ -45,7 +51,9 @@ module.exports = (app, passport) => {
         const DBRes = await axios.get(`https://flutter-products-3e91e.firebaseio.com/products/${req.query.productId}.json`);
         // console.log(JSON.stringify(DBRes.data),null,2);
         res.render('product-details', {
-            product: DBRes.data
+            product: DBRes.data,
+            isLogged: req.isAuthenticated(),
+            isAdmin: req.isAuthenticated() ? req.session.passport.user.isAdmin : false
         });
     });
 
@@ -61,7 +69,9 @@ module.exports = (app, passport) => {
         });
         // console.log(JSON.stringify(products,null,2));
         res.render('index', {
-            products
+            products,
+            isLogged: req.isAuthenticated(),
+            isAdmin: req.isAuthenticated() ? req.session.passport.user.isAdmin : false
         });
     });
 

@@ -23,10 +23,11 @@
         <table data-vertable="ver3">
             <thead>
             <tr class="row100 head">
-                <th class="column100 column2">Producto <span title="Add course" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus-circle"></i></span></th>
+                <th class="column100 column2">Producto <span title="Add course" data-toggle="modal" data-target="#editModal"><i class="fas fa-plus-circle"></i></span></th>
                 <th class="column100 column2">Título</th>
                 <th class="column100 column2">Descripción</th>
                 <th class="column100 column2">Precio</th>
+                <th class="column100 column2">Proveedor</th>
                 <th class="column100 column2">Stock</th>
                 <th class="column100 columnAction">Acciones</th>
             </tr>
@@ -38,7 +39,8 @@
                 <td class="column100 column2"><%= product.productData.title %></td>
                 <td class="column100 column2"><%= product.productData.description %></td>
                 <td class="column100 column2"><%= product.productData.price %></td>
-                <td class="column100 column2">2</td>
+                <td class="column100 column2"><%= product.productData.provider %></td>
+                <td class="column100 column2"><%= product.productData.stock %></td>
                 <td class="column100 columnAction">
                    <span data-process="edt<%= product.productId %>" title="Editar producto" data-toggle="modal" data-target="#editModal"><i class="fas fa-edit"></i></span>
                    <span data-process="del<%= product.productId %>" title="Eliminar producto"><i class="fas fa-minus-circle"></i></span>
@@ -85,10 +87,16 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Editar producto</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle"></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
+                </div>
+                <div class="modal-body m-t-20">
+                    <div class="wrap-input100 validate-input" data-validate="Escribe el URL de la imagen">
+                        <input class="input100" type="text">
+                        <span class="focus-input100" data-placeholder="Url de imagen"></span>
+                    </div>
                 </div>
                 <div class="modal-body m-t-20">
                     <div class="wrap-input100 validate-input" data-validate="Escribe el título">
@@ -109,13 +117,19 @@
                     </div>
                 </div>
                 <div class="modal-body m-t-20">
+                    <div class="wrap-input100 validate-input" data-validate="Escribe el proveedor">
+                        <input class="input100" type="text">
+                        <span class="focus-input100" data-placeholder="Proveedor"></span>
+                    </div>
+                </div>
+                <div class="modal-body m-t-20">
                     <div class="wrap-input100 validate-input" data-validate="Escribe el stock">
                         <input class="input100" type="number">
                         <span class="focus-input100" data-placeholder="Stock"></span>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-edit">Edit</button>
+                    <button type="submit" class="btn btn-edit">Editar</button>
                 </div>
             </div>
         </div>
