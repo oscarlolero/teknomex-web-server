@@ -4,8 +4,7 @@ const axios = require('axios');
 module.exports = (app, passport) => {
 
     app.post('/bill', async (req, res) => {
-        const userData = await axios.get(`https://flutter-products-3e91e.firebaseio.com/users/${req.session.passport.user.username}/bill.json`);
-        const products = JSON.parse(req.body.products).map(e => {
+        const products = JSON.parse(req.body.localStorage.products).map( e => {
             return {
                 product: {
                     description: e.title,
@@ -14,25 +13,40 @@ module.exports = (app, passport) => {
                 }
             }
         });
-        try {
-            // Importa el constructor del cliente
-            const Facturapi = require('facturapi');
-            // Crea una instancia del cliente usando tu llave secreta
-            const facturapi = new Facturapi('sk_test_K8n29vZ0YlpA45YmDjxdqgjzR7QDGXNx');
-            const invoice = await facturapi.invoices.create({
-                customer: {
-                    legal_name: userData.data.first_name.concat(userData.data.last_name),
-                    email: userData.data.email,
-                    tax_id: userData.data.rfc
-                },
-                items: products,
-                payment_form: Facturapi.PaymentForm.DINERO_ELECTRONICO
-            });
-            await facturapi.invoices.sendByEmail(invoice.id);
-            return res.status(200).send();
-        } catch (e) {
-            return res.status(502).send(e);
+        if(req.body.requireBill) {
+            const userData = await axios.get(`https://flutter-products-3e91e.firebaseio.com/users/${req.session.passport.user.username}/bill.json`);
+            try {
+                // Importa el constructor del cliente
+                const Facturapi = require('facturapi');
+                // Crea una instancia del cliente usando tu llave secreta
+                const facturapi = new Facturapi('sk_test_K8n29vZ0YlpA45YmDjxdqgjzR7QDGXNx');
+                const invoice = await facturapi.invoices.create({
+                    customer: {
+                        legal_name: userData.data.first_name.concat(userData.data.last_name),
+                        email: userData.data.email,
+                        tax_id: userData.data.rfc
+                    },
+                    items: products,
+                    payment_form: Facturapi.PaymentForm.DINERO_ELECTRONICO
+                });
+                await facturapi.invoices.sendByEmail(invoice.id);
+
+                JSON.parse(req.body.localStorage.products).forEach(async  e => {
+                    const actualStock = await axios.get(`https://flutter-products-3e91e.firebaseio.com/products/${e.productId}.json`);
+                    const finalStock = parseInt(actualStock.data.stock) - e.qty;
+                    axios.patch(`https://flutter-products-3e91e.firebaseio.com/products/${e.productId}.json`, {stock: finalStock});
+                });
+                return res.status(200).send();
+            } catch (e) {
+                return res.status(502).send(e);
+            }
         }
+        JSON.parse(req.body.localStorage.products).forEach(async  e => {
+            const actualStock = await axios.get(`https://flutter-products-3e91e.firebaseio.com/products/${e.productId}.json`);
+            const finalStock = parseInt(actualStock.data.stock) - e.qty;
+            axios.patch(`https://flutter-products-3e91e.firebaseio.com/products/${e.productId}.json`, {stock: finalStock});
+        });
+        return res.status(200).send();
     });
 
     app.get('/admin', isLoggedIn, async (req, res) => {
@@ -44,7 +58,8 @@ module.exports = (app, passport) => {
             }
         });
         res.render('admin', {
-            products
+            products,
+            mode: req.query.mode
         });
     });
 
@@ -111,7 +126,6 @@ module.exports = (app, passport) => {
     app.post('/user/login', async (req, res) => {
         try {
             const DBRes = await axios.get(`https://flutter-products-3e91e.firebaseio.com/users/${req.body.username}.json`);
-            console.log(Object.values(DBRes.data)[0]);
             if (!DBRes.data) {
                 return res.status(401).send(JSON.stringify({
                     'message': 'USER_NOT_FOUND'
@@ -152,7 +166,6 @@ module.exports = (app, passport) => {
 
     app.post('/product', async (req, res) => {
         const DBRes = await axios.post(`https://flutter-products-3e91e.firebaseio.com/products.json`, req.body);
-        console.log();
         res.status(200).send(JSON.stringify({
             'productId': DBRes.data.name
         }));
