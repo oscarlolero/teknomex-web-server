@@ -9,10 +9,10 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title  -->
-    <title>Amado - Furniture Ecommerce Template | Product Details</title>
+    <title>TeknoMex - <%= product.title %></title>
 
     <!-- Favicon  -->
-    <link rel="icon" href="img/core-img/favicon.ico">
+    <link rel="icon" href="img/core-img/favicon.png">
 
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="css/core-style.css">
@@ -77,7 +77,7 @@
                     <li><a href="account">Cuenta</a></li>
                 <% } %>
                 <% if(isAdmin) { %>
-                    <li><a href="admin">Administrar</a></li>
+                    <li><a href="admin?mode=products">Administrar</a></li>
                 <% } %>
             </ul>
         </nav>
@@ -154,8 +154,8 @@
                                 <p>Cant.</p>
                                 <div class="quantity">
                                     <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
-                                    <input type="number" class="qty-text" id="qty" step="1" min="1" max="300" name="quantity" value="1">
-                                    <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
+                                    <input type="number" class="qty-text" id="qty" step="1" name="quantity" value="1" data-max="<%= product.stock %>">
+                                    <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if(parseInt(effect.dataset.max) > qty) effect.value++;return false;"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
                                 </div>
                             </div>
 

@@ -1,69 +1,98 @@
-document.querySelectorAll('tr span').forEach(e => e.addEventListener('click', e => {
-    document.querySelector('.modal-title').innerHTML = 'Agregar producto';
-    document.querySelector('.btn-edit').innerHTML = 'Agregar';
-    const fields = document.querySelectorAll('.input100');
-    fields.forEach(e => {
-        e.value = '';
-        e.classList.remove('has-val');
-    });
-}));
+window.onload = () => {
+    if(location.search === '?mode=products') {
+        console.log('xd');
+        document.querySelectorAll('tr span').forEach(e => e.addEventListener('click', e => {
+            document.querySelector('.modal-title').innerHTML = 'Agregar producto';
+            document.querySelector('.btn-edit').innerHTML = 'Agregar';
+            const fields = document.querySelectorAll('.input100');
+            fields.forEach(e => {
+                e.value = '';
+                e.classList.remove('has-val');
+            });
+        }));
 
-document.querySelectorAll('.columnAction span').forEach(e => e.addEventListener('click', e => {
-    const dataProcess = e.target.closest('span').dataset.process;
-    const process = dataProcess.split('-');
-    const productId = dataProcess.slice(3);
-    document.querySelector('.edit-modal').dataset.js_edit_id = productId; //anexar product id a editar/eliminar
+        document.querySelectorAll('.columnAction span').forEach(e => e.addEventListener('click', e => {
+            const dataProcess = e.target.closest('span').dataset.process;
+            const process = dataProcess.split('-');
+            const productId = dataProcess.slice(3);
+            document.querySelector('.edit-modal').dataset.js_edit_id = productId; //anexar product id a editar/eliminar
 
-    if(process[0] === 'del') {
-        const item = document.querySelector(`[data-process="del${productId}"]`);
-        if(item) document.querySelector('tbody').removeChild(item.parentElement.parentElement);
-        axios.delete(`https://flutter-products-3e91e.firebaseio.com/products/${productId}.json`);
-    } else if(process[0] === 'edt') {
-        document.querySelector('.modal-title').innerHTML = 'Editar producto';
-        document.querySelector('.btn-edit').innerHTML = 'Editar';
+            if(process[0] === 'del') {
+                const item = document.querySelector(`[data-process="del${productId}"]`);
+                if(item) document.querySelector('tbody').removeChild(item.parentElement.parentElement);
+                axios.delete(`https://flutter-products-3e91e.firebaseio.com/products/${productId}.json`);
+            } else if(process[0] === 'edt') {
+                document.querySelector('.modal-title').innerHTML = 'Editar producto';
+                document.querySelector('.btn-edit').innerHTML = 'Editar';
 
-        const cols = document.querySelector(`[data-process="edt${productId}"]`).parentElement.parentElement;
-        const fields = document.querySelectorAll('.input100');
-        let index = 0;
-        fields.forEach(e => {
-            if(index === 0) {
-                e.value = cols.children[0].children[0].src;
-            } else {
-                e.value = cols.children[index].textContent;
+                const cols = document.querySelector(`[data-process="edt${productId}"]`).parentElement.parentElement;
+                const fields = document.querySelectorAll('.input100');
+                let index = 0;
+                fields.forEach(e => {
+                    if(index === 0) {
+                        e.value = cols.children[0].children[0].src;
+                    } else {
+                        e.value = cols.children[index].textContent;
+                    }
+                    e.classList.add('has-val');
+                    index++;
+                });
             }
-            e.classList.add('has-val');
-            index++;
-        });
-    }
-}));
+        }));
 
-document.querySelector('.btn-edit').addEventListener('click', () => {
-    const fields = document.querySelectorAll('.input100');
-    const newProductArray = [];
-    const newProductObject = {};
-    fields.forEach(e => {
-        newProductArray.push(e.value);
-    });
-    newProductObject.image = newProductArray[0];
-    newProductObject.title = newProductArray[1];
-    newProductObject.description = newProductArray[2];
-    newProductObject.price = newProductArray[3];
-    newProductObject.provider = newProductArray[4];
-    newProductObject.stock = newProductArray[5];
-    if(document.querySelector('.btn-edit').innerHTML === 'Editar') {
-        const productId = document.querySelector('.edit-modal').dataset.js_edit_id;
-        axios.patch(`https://flutter-products-3e91e.firebaseio.com/products/${productId}.json`,newProductObject).then(() => {
-            location.reload();
-            $('#editModal').modal('hide');
+        document.querySelector('.btn-edit').addEventListener('click', () => {
+            const fields = document.querySelectorAll('.input100');
+            const newProductArray = [];
+            const newProductObject = {};
+            fields.forEach(e => {
+                newProductArray.push(e.value);
+            });
+            newProductObject.image = newProductArray[0];
+            newProductObject.title = newProductArray[1];
+            newProductObject.description = newProductArray[2];
+            newProductObject.price = newProductArray[3];
+            newProductObject.provider = newProductArray[4];
+            newProductObject.stock = newProductArray[5];
+            if(document.querySelector('.btn-edit').innerHTML === 'Editar') {
+                const productId = document.querySelector('.edit-modal').dataset.js_edit_id;
+                axios.patch(`https://flutter-products-3e91e.firebaseio.com/products/${productId}.json`,newProductObject).then(() => {
+                    location.reload();
+                    $('#editModal').modal('hide');
+                });
+            } else {
+                axios.post(`https://flutter-products-3e91e.firebaseio.com/products.json`,newProductObject).then(() => {
+                    location.reload();
+                    $('#editModal').modal('hide');
+                });
+            }
         });
-    } else {
-        axios.post(`https://flutter-products-3e91e.firebaseio.com/products.json`,newProductObject).then(() => {
-            location.reload();
-            $('#editModal').modal('hide');
-        });
+    } else if(location.search === '?mode=clients') {
+
+        document.querySelectorAll('.btn-outline-info').forEach(e=>e.addEventListener('click', (e) => {
+            const button = e.target.closest('button');
+            alert(`
+                Nombre: ${button.dataset.first_name} ${button.dataset.last_name}\n
+                Email: ${button.dataset.email}\n
+                RFC: ${button.dataset.rfc}\n
+                Dirección: ${button.dataset.adress}\n
+                Ciudad: ${button.dataset.city}\n
+                CP: ${button.dataset.cp}\n
+                Teléfono: ${button.dataset.phone}\n
+            `);
+        }));
     }
+};
+
+const pages = document.querySelectorAll('.btn-group label');
+pages[0].addEventListener('click', () => {
+   location.href = 'admin?mode=products';
 });
-
+pages[1].addEventListener('click', () => {
+   location.href = 'admin?mode=sales';
+});
+pages[2].addEventListener('click', () => {
+   location.href = 'admin?mode=clients';
+});
 //TABLE
 (function ($) {
     "use strict";

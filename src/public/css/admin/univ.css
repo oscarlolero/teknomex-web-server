@@ -67,7 +67,6 @@ nav {
     flex-direction: row;
     background-color: #fff;
     box-shadow: 0 3px 10px #e5e5e5;
-    text-transform: uppercase;
     color: #808080;
 }
 nav ul {
@@ -82,9 +81,8 @@ nav ul {
     justify-content: flex-end;
 }
 
-nav li {
+nav li:first-child {
   padding: 15px 25px;
-  letter-spacing: 1px;
 }
 
 nav li:hover {
@@ -93,29 +91,6 @@ nav li:hover {
   cursor: pointer;
 }
 
-nav li:hover .submenu > li {
-  display: block;
-  width: 216px;
-}
-
-.submenu > li:hover {
-  box-shadow: 0 3px 10px #e5e5e5;
-  transition: box-shadow 0.2s ease-in;
-  color: #6a73b4;
-}
-.submenu {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  background-color: #fff;
-  box-shadow: 0 3px 10px #e5e5e5;
-  top:57px;
-  left: 0;
-}
-
-.submenu li {
-  display: none;
-}
 /*//////////////////////////////////////////////////////////////////
 [ Table ]*/
 

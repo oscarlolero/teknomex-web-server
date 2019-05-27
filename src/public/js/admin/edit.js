@@ -77,7 +77,6 @@ document.querySelector('.btn-add').addEventListener('click', () => {
         fieldsArray.push(document.getElementById(`field${i+1}`).value);
     }
 
-    console.log(fieldsArray);
     socket.emit('insertRow', {
         type,
         fieldsArray

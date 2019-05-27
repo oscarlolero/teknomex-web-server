@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-    <title>Administración</title>
+    <title>TeknoMex - Administración</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+    <link rel="icon" type="image/png" href="images/icons/favicon.png"/>
     <link rel="stylesheet" type="text/css" href="js/admin/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="fonts/font-awesome-5.5.0/css/all.css">
     <link rel="stylesheet" type="text/css" href="js/admin/animate/animate.css">
@@ -21,7 +21,7 @@
     <ul class="admin-nav">
         <a href="/index"><li><i class="fas fa-chevron-left" style="margin-right: 10px"></i></li></a>
         <li style="margin: auto;">
-            <div style="margin-left: -50px" class="btn-group btn-group-toggle" data-toggle="buttons">
+            <div style="margin-left: -60px" class="btn-group btn-group-toggle" data-toggle="buttons">
                 <label class="btn btn-secondary <% if(mode === 'products') { %> active <% } %>">
                     <input type="radio" name="options" id="oProducts" autocomplete="off" checked> PRODUCTOS
                 </label>
@@ -38,8 +38,11 @@
 
 <% if(mode === 'products') { %>
     <% include partials/admin/products %>
+<% } else if(mode === 'clients'){ %>
+    <% include partials/admin/clients %>
+<% } else if(mode === 'sales'){ %>
+    <% include partials/admin/sales %>
 <% } %>
-
 <script src="js/admin/jquery/jquery-3.2.1.min.js"></script>
 <script src="js/admin/bootstrap/js/popper.js"></script>
 <script src="js/admin/bootstrap/js/bootstrap.min.js"></script>

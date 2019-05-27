@@ -1,3 +1,19 @@
+window.onload = () => {
+    const info = document.querySelector('.login100-form');
+    const submitButton = document.querySelector('.login100-form-btn');
+    if(location.search === '?mode=register') {
+        info.insertAdjacentHTML("afterbegin", '<p class="info">Por favor ingresa un usuario y contraseña para registrarte.</p>');
+        submitButton.innerHTML = 'REGISTRARME';
+        document.querySelector('.login100-form').action = '/register';
+    } else {
+        info.insertAdjacentHTML("afterbegin", '<p class="info">Por favor ingresa tus datos para iniciar sesión.</p>\n' +
+            '<p class="info">¿No tienes cuenta aún? <a href="login?mode=register" class="info" style="font-size: 16px; color: #6a73b4;">Crea una.</a></p>');
+        submitButton.innerHTML = 'INICIAR SESIÓN';
+        document.querySelector('.login100-form').action = '/login';
+    }
+};
+
+
 //Login page styling
 (function ($) {
     "use strict";

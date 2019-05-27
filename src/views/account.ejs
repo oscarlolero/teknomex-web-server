@@ -9,10 +9,10 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title  -->
-    <title>Amado - Furniture Ecommerce Template | Checkout</title>
+    <title>TeknoMex - Cuenta</title>
 
     <!-- Favicon  -->
-    <link rel="icon" href="img/core-img/favicon.ico">
+    <link rel="icon" href="img/core-img/favicon.png">
 
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="css/core-style.css">
@@ -77,7 +77,7 @@
                     <li class="active"><a href="account">Cuenta</a></li>
                 <% } %>
                 <% if(isAdmin) { %>
-                    <li><a href="admin">Administrar</a></li>
+                    <li><a href="admin?mode=products">Administrar</a></li>
                 <% } %>
             </ul>
         </nav>
@@ -128,33 +128,14 @@
                         </form>
                     </div>
                 </div>
-<!--                <div class="col-12 col-lg-4">-->
-<!--                    <div class="cart-summary">-->
-<!--                        <h5>Cart Total</h5>-->
-<!--                        <ul class="summary-table">-->
-<!--                            <li><span>subtotal:</span> <span>$140.00</span></li>-->
-<!--                            <li><span>delivery:</span> <span>Free</span></li>-->
-<!--                            <li><span>total:</span> <span>$140.00</span></li>-->
-<!--                        </ul>-->
-
-<!--                        <div class="payment-method">-->
-<!--                            &lt;!&ndash; Cash on delivery &ndash;&gt;-->
-<!--                            <div class="custom-control custom-checkbox mr-sm-2">-->
-<!--                                <input type="checkbox" class="custom-control-input" id="cod" checked>-->
-<!--                                <label class="custom-control-label" for="cod">Cash on Delivery</label>-->
-<!--                            </div>-->
-<!--                            &lt;!&ndash; Paypal &ndash;&gt;-->
-<!--                            <div class="custom-control custom-checkbox mr-sm-2">-->
-<!--                                <input type="checkbox" class="custom-control-input" id="paypal">-->
-<!--                                <label class="custom-control-label" for="paypal">Paypal <img class="ml-15" src="img/core-img/paypal.png" alt=""></label>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-<!--                        <div class="cart-btn mt-100">-->
-<!--                            <a href="#" class="btn amado-btn w-100">Checkout</a>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <div class="col-12 col-lg-4">
+                    <div class="cart-summary">
+                        <h5>Acciones</h5>
+                        <div class="cart-btn mt-50 vaciar">
+                            <a href="/logout" class="btn amado-btn w-100" style="background-color: indianred">Cerrar sesión</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

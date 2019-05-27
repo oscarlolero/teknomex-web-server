@@ -3,7 +3,8 @@ document.querySelector('.amado-btn').addEventListener('click', (event) => {
         title: document.querySelector('h6').innerHTML,
         price: document.querySelector('.product-price').innerHTML,
         image: document.querySelector('.gallery_img img').src,
-        qty: document.querySelector('.qty-text').value
+        qty: document.querySelector('.qty-text').value,
+        productId: location.search.split('=')[1]
     };
     // console.log(product);
     const productsItem = localStorage.getItem('products');
@@ -16,7 +17,7 @@ document.querySelector('.amado-btn').addEventListener('click', (event) => {
         localStorage.setItem('totalProductsCart', '0');
         updateLocalStorage(product);
     }
-    window.location.href = "/index";
+    window.location.href = "/cart";
 });
 
 let updateLocalStorage = (product) => {

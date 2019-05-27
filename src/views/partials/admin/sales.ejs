@@ -1,0 +1,24 @@
+<div class="courses">
+    <div class="table100 ver3 m-t-10">
+        <table data-vertable="ver3">
+            <thead>
+            <tr class="row100 head">
+                <th class="column100 column2">Producto</th>
+                <th class="column100 columnAction">Cantidad</th>
+                <th class="column100 columnAction">Precio</th>
+                <th class="column100 columnAction">Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% data.forEach(function(sale) { %>
+                <tr class="row100">
+                    <td class="column100 column2"><%= sale.title %></td>
+                    <td class="column100 columnAction"><%= sale.qty %></td>
+                    <td class="column100 columnAction"><%= sale.price %></td>
+                    <td class="column100 columnAction"><%= '$'.concat(parseInt(sale.price.slice(1)) * parseInt(sale.qty)).toString() %></td>
+                </tr>
+            <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>

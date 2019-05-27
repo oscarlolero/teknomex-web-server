@@ -26,7 +26,6 @@ module.exports = function(passport) {
             } else if (Object.values(DBRes.data)[2] !== req.body.password) {
                 return done(null, false, req.flash('loginMessage', 'Contraseña incorrecta.'));
             } else {
-                console.log(DBRes.data);
                 return done(null, DBRes.data);
                 /*
                 return res.status(200).send(JSON.stringify({
