@@ -3,6 +3,35 @@ const axios = require('axios');
 
 module.exports = (app, passport) => {
 
+    app.post('/mobile/bill', async (req, res) => {
+        Object.entries(req.body).forEach(async (cartItem) => {
+            if(typeof cartItem[1].requireBill === 'undefined') {
+                const actualStock = await axios.get(`https://flutter-products-3e91e.firebaseio.com/products/${cartItem[1].productId}.json`);
+                const finalStock = parseInt(actualStock.data.stock) - cartItem[1].qty;
+                axios.patch(`https://flutter-products-3e91e.firebaseio.com/products/${cartItem[1].productId}.json`, {stock: finalStock});
+                axios.post(`https://flutter-products-3e91e.firebaseio.com/sales.json`, {
+                    title: cartItem[1].title,
+                    price: '$'.concat(cartItem[1].price.toString()),
+                    qty: cartItem[1].qty
+                });
+            }
+        });
+
+        const products = req.body.filter(e => typeof e.requireBill === 'undefined').map(cartItem => {
+            return {
+                product: {
+                    description: cartItem.title,
+                    product_key: '60131324',
+                    price: parseInt(cartItem.price) * parseInt(cartItem.qty),
+                }
+            }
+        });
+        console.log(products);
+        //console.log(req.body[Object.keys(req.body)[Object.keys(req.body).length - 1]]);
+        return res.status(200).send();
+
+    });
+
     app.post('/bill', async (req, res) => {
         const products = JSON.parse(req.body.localStorage.products).map(e => {
             return {
@@ -183,10 +212,6 @@ module.exports = (app, passport) => {
             isLogged: req.isAuthenticated(),
             isAdmin: req.isAuthenticated() ? req.session.passport.user.isAdmin : false
         });
-    });
-
-    app.post('/test', async (req, res) => {
-        console.log(req.body);
     });
 
     app.post('/user/login', async (req, res) => {
