@@ -122,7 +122,6 @@ module.exports = (app, passport) => {
                 }
             });
         } catch (e) {
-            console.log(e);
             res.redirect('/login?mode=registerFAILED');
         }
         res.redirect('/login');
@@ -186,6 +185,10 @@ module.exports = (app, passport) => {
         });
     });
 
+    app.post('/test', async (req, res) => {
+        console.log(req.body);
+    });
+
     app.post('/user/login', async (req, res) => {
         try {
             const DBRes = await axios.get(`https://flutter-products-3e91e.firebaseio.com/users/${req.body.username}.json`);
@@ -199,9 +202,7 @@ module.exports = (app, passport) => {
                 }));
             } else {
                 return res.status(200).send(JSON.stringify({
-                    // 'userId': Object.keys(DBRes.data)[1],
-                    // 'token': 'token_123123',
-                    'isAdmin': Object.values(DBRes.data)[0]
+                    'isAdmin': Object.values(DBRes.data)[1]
                 }));
             }
         } catch (e) {
