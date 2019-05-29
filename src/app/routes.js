@@ -4,31 +4,53 @@ const axios = require('axios');
 module.exports = (app, passport) => {
 
     app.post('/mobile/bill', async (req, res) => {
-        Object.entries(req.body).forEach(async (cartItem) => {
-            if(typeof cartItem[1].requireBill === 'undefined') {
-                const actualStock = await axios.get(`https://flutter-products-3e91e.firebaseio.com/products/${cartItem[1].productId}.json`);
-                const finalStock = parseInt(actualStock.data.stock) - cartItem[1].qty;
-                axios.patch(`https://flutter-products-3e91e.firebaseio.com/products/${cartItem[1].productId}.json`, {stock: finalStock});
-                axios.post(`https://flutter-products-3e91e.firebaseio.com/sales.json`, {
-                    title: cartItem[1].title,
-                    price: '$'.concat(cartItem[1].price.toString()),
-                    qty: cartItem[1].qty
-                });
-            }
-        });
-
-        const products = req.body.filter(e => typeof e.requireBill === 'undefined').map(cartItem => {
-            return {
-                product: {
-                    description: cartItem.title,
-                    product_key: '60131324',
-                    price: parseInt(cartItem.price) * parseInt(cartItem.qty),
+        try {
+            Object.entries(req.body).forEach(async (cartItem) => {
+                if(typeof cartItem[1].requireBill === 'undefined') {
+                    const actualStock = await axios.get(`https://flutter-products-3e91e.firebaseio.com/products/${cartItem[1].productId}.json`);
+                    const finalStock = parseInt(actualStock.data.stock) - cartItem[1].qty;
+                    axios.patch(`https://flutter-products-3e91e.firebaseio.com/products/${cartItem[1].productId}.json`, {stock: finalStock});
+                    axios.post(`https://flutter-products-3e91e.firebaseio.com/sales.json`, {
+                        title: cartItem[1].title,
+                        price: '$'.concat(cartItem[1].price.toString()),
+                        qty: cartItem[1].qty
+                    });
                 }
+            });
+            //aqui se guarda el requireBill y username
+            const aditionalData = req.body[Object.keys(req.body)[Object.keys(req.body).length - 1]];
+            if(aditionalData.requireBill === true) {
+                const products = req.body.filter(e => typeof e.requireBill === 'undefined').map(cartItem => {
+                    return {
+                        product: {
+                            description: cartItem.title,
+                            product_key: '60131324',
+                            price: parseInt(cartItem.price) * parseInt(cartItem.qty),
+                        }
+                    }
+                });
+                const userData = await axios.get(`https://flutter-products-3e91e.firebaseio.com/users/${aditionalData.username}/bill.json`);
+                // Importa el constructor del cliente
+                const Facturapi = require('facturapi');
+                // Crea una instancia del cliente usando tu llave secreta
+                const facturapi = new Facturapi('sk_test_K8n29vZ0YlpA45YmDjxdqgjzR7QDGXNx');
+                const invoice = await facturapi.invoices.create({
+                    customer: {
+                        legal_name: userData.data.first_name.concat(userData.data.last_name),
+                        email: userData.data.email,
+                        tax_id: userData.data.rfc
+                    },
+                    items: products,
+                    payment_form: Facturapi.PaymentForm.DINERO_ELECTRONICO
+                });
+                await facturapi.invoices.sendByEmail(invoice.id);
             }
-        });
-        console.log(products);
-        //console.log(req.body[Object.keys(req.body)[Object.keys(req.body).length - 1]]);
-        return res.status(200).send();
+
+            return res.status(200).send();
+        } catch (e) {
+            console.log(e);
+            return res.status(502).send();
+        }
 
     });
 
