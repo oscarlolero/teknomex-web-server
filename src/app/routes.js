@@ -36,7 +36,7 @@ module.exports = (app, passport) => {
                 const facturapi = new Facturapi('sk_test_2vx5r3aPR0ZAX09D4brLlAljy9XLe4Y7');
                 const invoice = await facturapi.invoices.create({
                     customer: {
-                        legal_name: userData.data.first_name.concat(userData.data.last_name),
+                        legal_name: userData.data.first_name.concat(` ${userData.data.last_name}`),
                         email: userData.data.email,
                         tax_id: userData.data.rfc
                     },
@@ -74,7 +74,7 @@ module.exports = (app, passport) => {
                 const facturapi = new Facturapi('sk_test_2vx5r3aPR0ZAX09D4brLlAljy9XLe4Y7');
                 const invoice = await facturapi.invoices.create({
                     customer: {
-                        legal_name: userData.data.first_name.concat(userData.data.last_name),
+                        legal_name: userData.data.first_name.concat(` ${userData.data.last_name}`),
                         email: userData.data.email,
                         tax_id: userData.data.rfc
                     },
