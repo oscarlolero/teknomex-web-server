@@ -17,7 +17,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs'); //Configurar motor de plantillas
 
 //Configurar y probar conexión a base de datos..
-
 //middlewares
 // app.use(morgan('dev')); //Logeo de peticiones al servidor
 app.use(cookieParser());
