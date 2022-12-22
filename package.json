@@ -18,7 +18,7 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "facturapi": "^2.1.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "morgan": "^1.9.1",
     "node-fetch": "^2.5.0",
     "passport": "^0.4.0",
